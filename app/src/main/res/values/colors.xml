@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="app_green">#38C190</color>
+    <color name="app_blue">#41729F</color>
+    <color name="app_dark_blue">#274472</color>
+    <color name="app_orange">#E1470D</color>
+    <color name="app_white">#FFF</color>
+    <color name="app_gray">#3E3E3E</color>
+    <color name="app_pink">#BD6193</color>
+    <color name="app_yellow">#E19E20</color>
+</resources>
