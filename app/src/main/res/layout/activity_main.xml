@@ -33,6 +33,18 @@
         app:layout_constraintTop_toBottomOf="@+id/playerOne"
         android:layout_marginStart="40dp" />
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/playerOneImage"
+        android:layout_width="112dp"
+        android:layout_height="112dp"
+        android:background="@color/app_gray"
+        app:backgroundTint="@color/app_gray"
+        android:textSize="60sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/playerOneScore"
+        app:layout_constraintLeft_toLeftOf="@+id/playerOne"
+        />
+
     <TextView
         android:id="@+id/playerTwo"
         android:layout_width="wrap_content"
@@ -57,6 +69,18 @@
         app:layout_constraintRight_toRightOf="@+id/playerTwo"
         app:layout_constraintTop_toBottomOf="@+id/playerTwo"
         android:layout_marginEnd="40dp" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/playerTwoImage"
+        android:layout_width="112dp"
+        android:layout_height="112dp"
+        android:background="@color/app_gray"
+        app:backgroundTint="@color/app_gray"
+        android:textSize="60sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/playerTwoScore"
+        app:layout_constraintRight_toRightOf="@+id/btn2"
+        />
 
     <Button
         android:id="@+id/btn0"
@@ -193,15 +217,29 @@
     <Button
         android:id="@+id/btnResetGame"
         android:layout_width="368dp"
-        android:layout_height="80dp"
+        android:layout_height="60dp"
         android:layout_marginTop="10dp"
         android:background="@color/app_dark_blue"
         app:backgroundTint="@color/app_dark_blue"
         android:text="Reset"
         android:textColor="@color/app_white"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="@+id/btn6"
         app:layout_constraintTop_toBottomOf="@+id/btn6" />
+
+    <Button
+        android:id="@+id/btnBackToMainMenu"
+        android:layout_width="368dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/app_dark_blue"
+        app:backgroundTint="@color/app_dark_blue"
+        android:text="Main Menu"
+        android:textColor="@color/app_white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="@+id/btnResetGame"
+        app:layout_constraintTop_toBottomOf="@+id/btnResetGame" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

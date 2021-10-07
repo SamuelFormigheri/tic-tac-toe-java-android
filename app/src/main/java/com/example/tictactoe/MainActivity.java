@@ -1,7 +1,10 @@
 package com.example.tictactoe;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,10 +19,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private TextView playerOneScore, playerTwoScore;
     private Button [] buttons = new Button[9];
-    private Button resetGame;
+    private Button resetGame, btnBackToMainMenu;
+
+    private AppCompatImageView playerOneImage, playerTwoImage;
 
     private int playerOneScoreCount, playerTwoScoreCount, roundCount;
     boolean playerOneTurn;
+    boolean boardNotReady;
 
     //p1 => 0;
     //p2 => 1;
@@ -37,10 +43,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Bitmap imgPlayerOne = (Bitmap) getIntent().getParcelableExtra("imgPlayerOne");
+        Bitmap imgPlayerTwo = (Bitmap) getIntent().getParcelableExtra("imgPlayerTwo");
+
+        playerOneImage = (AppCompatImageView) findViewById(R.id.playerOneImage);
+        playerTwoImage = (AppCompatImageView) findViewById(R.id.playerTwoImage);
+
+        playerOneImage.setImageBitmap(imgPlayerOne);
+        playerTwoImage.setImageBitmap(imgPlayerTwo);
+
         playerOneScore = (TextView) findViewById(R.id.playerOneScore);
         playerTwoScore = (TextView) findViewById(R.id.playerTwoScore);
 
         resetGame = (Button) findViewById(R.id.btnResetGame);
+        btnBackToMainMenu = (Button) findViewById(R.id.btnBackToMainMenu);
+
+        boardNotReady = false;
 
         for(int i = 0; i < buttons.length; i++){
             String buttonId = "btn" + i;
@@ -59,6 +77,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+        btnBackToMainMenu.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                startActivity(new Intent(MainActivity.this, DashboardActivity.class));
+            }
+        });
+
         roundCount = 0;
         playerOneScoreCount = 0;
         playerTwoScoreCount = 0;
@@ -67,6 +92,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
+        if(boardNotReady)
+            return;
+
         if(!(
                 ((Button)view).getText().toString().equals("")
         )){
@@ -94,6 +122,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    wonMessage();
                     updatePlayerScore();
                     playAgain();
                 }
@@ -121,6 +150,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             gameState[winningPosition[0]] != 2
             ){
                 highlightWinMove(winningPosition[0], winningPosition[1], winningPosition[2]);
+                boardNotReady = true;
                 return true;
             }
         }
@@ -141,9 +171,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             gameState[i] = 2;
             buttons[i].setText("");
         }
+
+        boardNotReady = false;
     }
 
     public void updatePlayerScore(){
+        playerOneScore.setText(Integer.toString(playerOneScoreCount));
+        playerTwoScore.setText(Integer.toString(playerTwoScoreCount));
+    }
+
+    public void wonMessage(){
         String wonText;
 
         if(playerOneTurn) {
@@ -153,8 +190,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             playerTwoScoreCount++;
             wonText = "Player two won!";
         }
-        playerOneScore.setText(Integer.toString(playerOneScoreCount));
-        playerTwoScore.setText(Integer.toString(playerTwoScoreCount));
 
         Toast.makeText(this, wonText, Toast.LENGTH_SHORT).show();
     }
